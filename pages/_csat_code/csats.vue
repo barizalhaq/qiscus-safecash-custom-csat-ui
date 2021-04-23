@@ -12,7 +12,7 @@
             v-if="errMessage !== undefined"
           >
             <p class="font-bold">Gagal!</p>
-            <p>{{ errMessage }}</p>
+            <p class="break-words">{{ errMessage }}</p>
           </div>
           <div>
             <h1 class="font-bold text-base md:text-lg">
@@ -21,7 +21,7 @@
             </h1>
           </div>
           <div>
-            <span class="font-bold text-base md:text-lg">
+            <span class="font-bold text-base md:text-lg break-words">
               Bagaimana layanan Customer Care Safecash?</span
             >
           </div>
@@ -64,7 +64,7 @@
             </button>
           </div>
           <div class="flex flex-col space-y-2">
-            <span class="font-bold text-base md:text-lg break-all"
+            <span class="font-bold text-base md:text-lg break-words"
               >Bantu kami untuk terus dapat memberikan layanan terbaik untuk
               Anda.</span
             >
