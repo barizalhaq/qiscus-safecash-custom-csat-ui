@@ -12,7 +12,7 @@
           <div class="flex flex-col m-auto absolute justify-center h-full">
             <div
               v-if="!loading && !surveyDone"
-              class="h-4/5 grid grid-flow-row auto-rows-max gap-4 justify-center px-8 overflow-y-auto"
+              class="h-4/5 grid grid-flow-row auto-rows-max gap-4 justify-center p-8 overflow-y-auto"
             >
               <div
                 class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4"
@@ -23,18 +23,18 @@
                 <p class="break-words">{{ errMessage }}</p>
               </div>
               <div>
-                <h1 class="font-bold text-base md:text-lg">
-                  <span>Hai </span
-                  ><span class="text-main-blue">SafeFriends </span
+                <h1 class="font-bold">
+                  <span class="text-base">Hai </span
+                  ><span class="text-base text-main-blue">SafeFriends </span
                   ><span>!</span>
                 </h1>
               </div>
               <div>
-                <span class="font-bold text-base md:text-lg break-words">
+                <span class="font-bold text-base break-words">
                   Bagaimana layanan Customer Care Safecash?</span
                 >
               </div>
-              <div class="flex flex-row space-x-8 justify-center">
+              <div class="flex flex-row justify-evenly">
                 <button
                   @click="
                     () => {
@@ -46,14 +46,14 @@
                     'bg-green-700 border-green-700 text-white': survey.puas,
                     'text-green-500 border-transparent': !survey.puas,
                   }"
-                  class="inline-flex flex-col space-y-2 justify-center items-center rounded-md border-4 font-bold px-6 py-2 focus:outline-none"
+                  class="inline-flex flex-col space-y-2 justify-center items-center rounded-md border-4 font-bold px-4 py-2 focus:outline-none"
                 >
                   <img
                     src="/excellent_emot.png"
                     alt="excellent_emot"
-                    class="w-16"
+                    class="w-10"
                   />
-                  <span class="text-base md:text-lg">Puas</span>
+                  <span class="text-base">Puas</span>
                 </button>
                 <button
                   @click="
@@ -66,26 +66,26 @@
                     'bg-red-700 border-red-700 text-white': survey.tidakPuas,
                     'text-red-500 border-transparent': !survey.tidakPuas,
                   }"
-                  class="inline-flex flex-col space-y-2 justify-center items-center rounded-md border-4 font-bold px-6 py-2 focus:outline-none"
+                  class="inline-flex flex-col space-y-2 justify-center items-center rounded-md border-4 font-bold px-4 py-2 focus:outline-none"
                 >
-                  <img src="/bad_emot.png" alt="bad_emot" class="w-16" />
-                  <span class="text-base md:text-lg">Tidak Puas</span>
+                  <img src="/bad_emot.png" alt="bad_emot" class="w-10" />
+                  <span class="text-base">Tidak Puas</span>
                 </button>
               </div>
-              <div class="flex flex-col space-y-2">
-                <span class="font-bold text-base md:text-lg break-words"
+              <div class="flex flex-col space-y-2 mb-3">
+                <span class="font-bold text-base break-words mb-3"
                   >Bantu kami untuk terus dapat memberikan layanan terbaik untuk
                   Anda.</span
                 >
-                <span class="text-sm md:text-base"
+                <span class="text-sm"
                   >Anda dapat memberikan penilaian terkait layanan yang
                   diberikan dengan menuliskan angka sesuai dengan masukan
                   dibawah ini.</span
                 >
-                <span class="text-base text-red-500"
+                <span class="text-sm text-red-500"
                   >* Boleh lebih dari satu</span
                 >
-                <ol class="list-decimal list-inside md:text-base text-sm">
+                <ol class="list-decimal list-inside text-sm">
                   <li>Masalah Anda tidak teratasi</li>
                   <li>Penyelesaian masalah lama</li>
                   <li>Customer Care tidak memahami masalah Anda</li>
@@ -97,12 +97,12 @@
               </div>
               <div class="w-full">
                 <textarea
-                  placeholder="Masukkan jawaban anda"
+                  placeholder="Masukkan jawaban Anda"
                   class="border-none rounded-md ring ring-gray-300 focus:outline-none p-4 w-full"
                   v-model="survey.feedback"
                 ></textarea>
               </div>
-              <div class="flex justify-center">
+              <div class="flex justify-center pb-8 md:pb-0">
                 <button
                   @click="submitSurvey"
                   class="rounded-md font-bold text-white border-2 border-main-blue bg-main-blue px-4 py-2 focus:outline-none"
@@ -148,7 +148,12 @@ export default {
 
       return { csat, config, surveyDone: csat.submitted_at !== null }
     } catch (err) {
-      console.log(err)
+      if (
+        Object.prototype.hasOwnProperty.call(err, 'response') &&
+        err.response.status === 400
+      ) {
+        context.error({ statusCode: err.response.status, message: 'Not Found' })
+      }
     }
   },
   data() {
